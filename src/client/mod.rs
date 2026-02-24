@@ -400,7 +400,7 @@ impl Client {
     }
 
     /// Sets the max number of nodes to attempt for a request/transaction before failing.
-    /// 
+    ///
     /// If set to `None`, then the client will attempt to use all healthy nodes.
     pub fn set_max_nodes_per_request(&self, max_nodes: Option<u32>) {
         self.net().0.load().set_max_nodes_per_request(max_nodes)

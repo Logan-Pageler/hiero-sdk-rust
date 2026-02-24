@@ -391,10 +391,9 @@ impl NetworkData {
         }
 
         // Use all healthy nodes unless a max is specified
-        let node_sample_amount = self.max_nodes_per_request().map_or(
-            node_ids.len(), 
-            |it| (it as usize).min(node_ids.len())
-        );
+        let node_sample_amount = self
+            .max_nodes_per_request()
+            .map_or(node_ids.len(), |it| (it as usize).min(node_ids.len()));
 
         let node_id_indecies =
             rand::seq::index::sample(&mut thread_rng(), node_ids.len(), node_sample_amount);
@@ -590,7 +589,7 @@ mod tests {
         let num_healthy_nodes = network.healthy_node_ids().count();
         let num_random_nodes = network.random_node_ids().len();
         assert!(num_random_nodes == num_healthy_nodes, "Default should get all healthy nodes");
-        
+
         // Check getter and setters
         network.set_max_nodes_per_request(Some(2));
         assert_eq!(network.max_nodes_per_request(), Some(2));
