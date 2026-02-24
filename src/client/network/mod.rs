@@ -583,6 +583,25 @@ mod tests {
     };
 
     #[test]
+    fn test_network_set_max_nodes_per_request() {
+        let network = NetworkData::from_static(TESTNET);
+
+        // Check default
+        let num_healthy_nodes = network.healthy_node_ids().count();
+        let num_random_nodes = network.random_node_ids().len();
+        assert!(num_random_nodes == num_healthy_nodes, "Default should get all healthy nodes");
+        
+        // Check getter and setters
+        network.set_max_nodes_per_request(Some(2));
+        assert_eq!(network.max_nodes_per_request(), Some(2));
+
+        // Check that setter works properly
+        let num_random_nodes = network.random_node_ids().len();
+        println!("Number of random nodes: {}", num_random_nodes);
+        assert!(num_random_nodes == 2, "Should only get 2 random nodes");
+    }
+
+    #[test]
     fn test_network_with_string_endpoints() {
         let node_address = NodeAddress {
             node_id: 1,
